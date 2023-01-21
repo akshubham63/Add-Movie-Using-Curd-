@@ -14,6 +14,7 @@ const movieDetailsForm = document.getElementById("movieDetailsForm");
 const searchMovie = document.getElementById("searchMovie");
 const suggestionBox = document.getElementById("suggestionBox");
 const searchIcon = document.getElementById("searchIcon");
+const btn = document.getElementById("btn");
 
 
 
@@ -71,6 +72,14 @@ const onToggleCloseHandler = (eve) =>{
     backDrop.classList.toggle("d-none");
     movieModel.classList.toggle("d-none");
 };// function for the dropdown and movieModel to show and hide
+
+const onFormRest = (eve) => {
+    title.value = "";
+    imgUrl.value = "";
+    rating.value = "";
+    updateMovieBtn.classList.add("d-none");
+    addMovie.classList.remove("d-none");
+}
 
 const movieAddHandler = (e) =>{
     let obj;
@@ -264,3 +273,4 @@ addMovie.addEventListener("click",movieAddHandler);
 updateMovieBtn.addEventListener("click", onUpdateHandler);
 searchMovie.addEventListener("keyup", onSearchHandler);
 searchIcon.addEventListener("click", onSearchIconHandler);
+btn.addEventListener("click", onFormRest);
