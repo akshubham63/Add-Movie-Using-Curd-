@@ -14,7 +14,7 @@ const movieDetailsForm = document.getElementById("movieDetailsForm");
 const searchMovie = document.getElementById("searchMovie");
 const suggestionBox = document.getElementById("suggestionBox");
 const searchIcon = document.getElementById("searchIcon");
-const body = document.querySelector("body");
+
 
 
 
@@ -25,7 +25,7 @@ function templating(arr){
     arr.forEach(ele => {
     result += `
         <div class="col-sm-3 mb-3">
-            <div class="card myMovieCard">
+            <div class="card myMovieCard" onMouseOver="iconShow(this)" onMouseLeave="iconHide(this)">
                 <div class="card-header">
                     <h3 class="text-capitalize">${ele.title}</h3>
                 </div>
@@ -34,8 +34,8 @@ function templating(arr){
                 </div>
                 <div class="card-footer">
                     <div class="icon d-inline-block">
-                        <i class="fa-solid fa-pen-to-square text-info" onClick="onEditHandler(this)" data-id="${ele.id}"></i>
-                        <i class="fa-solid fa-trash text-danger" onClick="onDeleteHandler(this)" data-id="${ele.id}"></i>
+                        <i class="fa-solid fa-pen-to-square text-info d-none" onClick="onEditHandler(this)" data-id="${ele.id}"></i>
+                        <i class="fa-solid fa-trash text-danger d-none" onClick="onDeleteHandler(this)" data-id="${ele.id}"></i>
                     </div>
                     <h5 class="d-inline-block float-right p-1">
                         ${ele.rating}/10
@@ -94,8 +94,9 @@ const movieAddHandler = (e) =>{
     // templating(moviesArr);
     let div = document.createElement("div");
     div.className = `col-sm-3 mb-3`;
+    // div.setAttribute("onMouseOver","iconShow(this)");
     div.innerHTML = 
-                    `<div class="card myMovieCard">
+                    `<div class="card myMovieCard" onMouseOver="iconShow(this)" onMouseLeave="iconHide(this)">
                         <div class="card-header">
                             <h3 class="text-capitalize">${obj.title}</h3>
                         </div>
@@ -104,8 +105,8 @@ const movieAddHandler = (e) =>{
                         </div>
                         <div class="card-footer">
                             <div class="icon d-inline-block">
-                                <i class="fa-solid fa-pen-to-square text-info" onClick="onEditHandler(this)" data-id="${obj.id}"></i>
-                                <i class="fa-solid fa-trash text-danger" onClick="onDeleteHandler(this)" data-id="${obj.id}"></i>
+                                <i class="fa-solid fa-pen-to-square text-info d-none" onClick="onEditHandler(this)" data-id="${obj.id}"></i>
+                                <i class="fa-solid fa-trash text-danger d-none" onClick="onDeleteHandler(this)" data-id="${obj.id}"></i>
                             </div>
                             <h5 class="d-inline-block float-right p-1">
                                 ${obj.rating}/10
@@ -167,8 +168,8 @@ const onUpdateHandler = (ele) => {
             </div>
             <div class="card-footer">
                 <div class="icon d-inline-block">
-                    <i class="fa-solid fa-pen-to-square text-info" onClick="onEditHandler(this)" data-id="${updateObj.id}"></i>
-                    <i class="fa-solid fa-trash text-danger" onClick="onDeleteHandler(this)" data-id="${updateObj.id}"></i>
+                    <i class="fa-solid fa-pen-to-square text-info d-none" onClick="onEditHandler(this)" data-id="${updateObj.id}"></i>
+                    <i class="fa-solid fa-trash text-danger d-none" onClick="onDeleteHandler(this)" data-id="${updateObj.id}"></i>
                 </div>
                 <h5 class="d-inline-block float-right p-1">
                     ${updateObj.rating}/10
@@ -236,6 +237,22 @@ const movieSearch = () => {
             col3Div.classList.remove("d-none");
         };
     });
+};
+
+// on mouse over
+const iconShow = (ele) => {
+    let myMovieCardEle = ele.children;
+    let cardFooterEle = myMovieCardEle[myMovieCardEle.length - 1].children;
+    let myIconEle = [...cardFooterEle[0].children];
+    myIconEle.forEach(ele => ele.classList.remove("d-none"));
+};
+
+// on mouse move 
+const iconHide = (ele) => {
+    let myMovieCardEle = ele.children;
+    let cardFooterEle = myMovieCardEle[myMovieCardEle.length - 1].children;
+    let myIconEle = [...cardFooterEle[0].children];
+    myIconEle.forEach(ele => ele.classList.add("d-none"));
 };
 
 
