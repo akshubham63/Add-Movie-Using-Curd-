@@ -108,12 +108,6 @@ const onFormRest = (eve) => {
     addMovie.classList.remove("d-none");
 };
 
-const onBlurHandler = (eve) => {
-    suggestionBox.classList.add("d-none");
-    movieSearch();
-    errorMassageChecker();
-};
-
 const onInputHandler = (eve) => {
     // cl(eve.target.value);
     if(eve.target.value > 10){
@@ -196,7 +190,9 @@ const onDeleteHandler = (ele) => {
     let deleteObjIndex = moviesArr.findIndex(movie => movie.id === deleteId);
     moviesArr.splice(deleteObjIndex,1);
     storeMovieArr();
-    let deleteEle = ele.parentElement.parentElement.parentElement.parentElement.remove();
+    // let deleteEle = ele.parentElement.parentElement.parentElement.parentElement.remove();
+    ele.closest(".col-sm-3").remove(); // alternate way
+    // cl(deleteEle);
 };
 
 const onUpdateHandler = (ele) => {
@@ -207,9 +203,7 @@ const onUpdateHandler = (ele) => {
     updateObj.imgUrl = imgUrl.value;
     updateObj.rating = rating.value;
     storeMovieArr();
-    let allDataEle = [...document.querySelectorAll("#movieCardContainer [data-id]")];
-    let updateEle = allDataEle.find(ele => ele.dataset.id === updateId);
-    let updateMovieCard = updateEle.parentElement.parentElement.parentElement;
+    let updateMovieCard = document.querySelector(`#movieCardContainer [data-id = "${updateId}"]`).closest(".card");
     // cl(updateMovieCard);
     updateMovieCard.innerHTML = `
             <div class="card-header">
@@ -232,7 +226,6 @@ const onUpdateHandler = (ele) => {
     movieModel.classList.add("d-none");
     updateMovieBtn.classList.add("d-none");
     addMovie.classList.remove("d-none");
-    movieDetailsForm.clear();
 };
 
 const onSearchHandler = (eve) => {
@@ -285,8 +278,7 @@ const movieSearch = () => {
     allMovieCard.forEach(ele => ele.classList.add("d-none"));
     allTitle.forEach(ele => {
         if(ele.innerText.trim().toLowerCase().includes(inputValue)){
-            let col3Div = ele.parentElement.parentElement.parentElement;
-            col3Div.classList.remove("d-none");
+            ele.closest(".col-sm-3").classList.remove("d-none");
         };
     });
 };
